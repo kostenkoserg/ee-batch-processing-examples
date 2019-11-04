@@ -1,0 +1,20 @@
+apply plugin: 'java' 
+apply plugin: 'war'
+
+sourceCompatibility = '1.8'
+defaultTasks 'clean', 'build'
+ext.libraryVersions = [
+    javaee                  : '8.0',
+    hibernateentitymanager  : '5.4.1.Final',
+    h2                      : '1.4.198',
+    junit                   : '4.12'
+]
+repositories {
+    mavenCentral()
+}
+dependencies {
+    providedCompile "javax:javaee-api:${libraryVersions.javaee}"
+    testCompile "org.hibernate:hibernate-entitymanager:${libraryVersions.hibernateentitymanager}"
+    testCompile "junit:junit:${libraryVersions.junit}"
+    testCompile "com.h2database:h2:${libraryVersions.h2}"
+}

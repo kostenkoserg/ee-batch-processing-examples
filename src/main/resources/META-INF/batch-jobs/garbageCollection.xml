@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<job id="garbageCollection" xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+     xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/jobXML_1_0.xsd"
+     version="1.0">
+    <step id="garbageCollection.step1">
+        <batchlet ref="org.jberet.repository.PurgeBatchlet">
+            <properties>
+                <property name="batchStatuses" value="sql.sql"/>
+            </properties>
+        </batchlet>
+    </step>
+</job>
