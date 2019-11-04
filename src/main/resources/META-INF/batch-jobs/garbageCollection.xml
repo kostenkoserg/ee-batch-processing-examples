@@ -7,7 +7,7 @@
     <step id="garbageCollection.step1">
         <batchlet ref="org.jberet.repository.PurgeBatchlet">
             <properties>
-                <property name="batchStatuses" value="sql.sql"/>
+                <property name="sqlFile" value="delete.sql"/>
             </properties>
         </batchlet>
     </step>

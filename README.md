@@ -1,1 +1,1 @@
-# jpa-examples
+# batch-processing-examples
