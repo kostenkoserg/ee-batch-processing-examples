@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<job id="hugeImport" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/jobXML_1_0.xsd" version="1.0">
+    <step id="fileSelector" next="decider">
+        <batchlet ref="fileSelector">
+            <properties>
+                <property name="path" value="/tmp/files2import"/>
+                <property name="extension" value="json,xml"/>
+            </properties>
+        </batchlet>
+    </step>
+    
+    <decision id="decider" ref="myDecider">
+        <next on="xml" to="xmlParser"/>
+        <next on="json" to="jsonParser"/>
+    </decision>
+
+    <step id="xmlParser" next="chunkProcessor">
+        <batchlet ref="xmlParrser">
+            <properties>
+                <property name="itemClass" value="MyItem"/>
+            </properties>
+        </batchlet>
+    </step>
+
+    <step id="jsonParser" next="chunkProcessor">
+        <batchlet ref="jsonParrser">
+            <properties>
+                <property name="itemClass" value="MyItem"/>
+            </properties>
+        </batchlet>
+    </step>
+
+    <step id="chunkProcessor">
+        <chunk>
+            <reader ref="itemReader"/>
+            <processor ref="mockItemProcessor"/>
+            <writer ref="jpaItemWriter"/>
+        </chunk>
+        <partition>
+            <plan partitions="5"></plan>
+        </partition>
+    </step>
+</job>
