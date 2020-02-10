@@ -4,10 +4,10 @@ import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Optional;
 import javax.batch.api.AbstractBatchlet;
 import javax.batch.api.BatchProperty;
+import javax.batch.runtime.BatchStatus;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -25,20 +25,16 @@ public class FileSelectorBatchlet extends AbstractBatchlet {
     @BatchProperty
     private String path;
 
-    @Inject
-    @BatchProperty
-    private String extensions;
-
     @Override
     public String process() throws Exception {
 
-        List<File> filesInFolder = Files.walk(Paths.get(path))
+        Optional<File> file = Files.walk(Paths.get(path))
                 .filter(Files::isRegularFile)
-                .map(Path::toFile)
-                .collect(Collectors.toList());
-        
-        
-        return "OK";
-    }
+                .map(Path::toFile).findAny();
 
+
+        jobContext.setFile(file);
+        
+        return BatchStatus.COMPLETED.name();
+    }
 }

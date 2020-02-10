@@ -1,6 +1,7 @@
 package org.kostenko.example.batch.imprt;
 
 import java.io.File;
+import java.util.Optional;
 import javax.batch.runtime.context.JobContext;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -14,14 +15,15 @@ public class ImportJobContext {
     
     @Inject
     private JobContext jobContext;
-    private File file;
     
-    public File getFile() {
+    private Optional<File> file;
+
+
+    public Optional<File> getFile() {
         return file;
     }
 
-    public void setFile(File file) {
+    public void setFile(Optional<File> file) {
         this.file = file;
     }
-    
 }

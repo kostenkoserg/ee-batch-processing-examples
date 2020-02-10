@@ -4,7 +4,6 @@
         <batchlet ref="fileSelector">
             <properties>
                 <property name="path" value="/tmp/files2import"/>
-                <property name="extensions" value="json,xml"/>
             </properties>
         </batchlet>
     </step>
