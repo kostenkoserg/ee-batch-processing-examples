@@ -12,18 +12,25 @@ import javax.inject.Named;
  */
 @Named
 public class ImportJobContext {
-    
+
     @Inject
     private JobContext jobContext;
-    
-    private Optional<File> file;
 
+    private Optional<File> file = Optional.empty();
 
     public Optional<File> getFile() {
-        return file;
+        return getTransientUserData().getFile();
     }
 
     public void setFile(Optional<File> file) {
-        this.file = file;
+        getTransientUserData().setFile(file);
+    }
+
+    
+    private ImportJobContext getTransientUserData() {
+        if (jobContext.getTransientUserData() == null) {
+            jobContext.setTransientUserData(this);
+        }
+        return (ImportJobContext) jobContext.getTransientUserData();
     }
 }
