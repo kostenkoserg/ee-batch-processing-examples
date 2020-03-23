@@ -2,6 +2,8 @@ package org.kostenko.example.batch.imprt;
 
 import java.io.File;
 import java.util.Optional;
+import java.util.Queue;
+import java.util.concurrent.ConcurrentLinkedQueue;
 import javax.batch.runtime.context.JobContext;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -12,18 +14,29 @@ import javax.inject.Named;
  */
 @Named
 public class ImportJobContext {
-    
+
     @Inject
     private JobContext jobContext;
+
+    private Optional<File> file = Optional.empty();
+    private Queue<ImportItem> items = new ConcurrentLinkedQueue<>();
     
-    private Optional<File> file;
-
-
     public Optional<File> getFile() {
-        return file;
+        return getImportJobContext().file;
     }
 
     public void setFile(Optional<File> file) {
-        this.file = file;
+        getImportJobContext().file = file;
+    }
+
+    public Queue<ImportItem> getItems() {
+        return items;
+    }
+
+    private ImportJobContext getImportJobContext() {
+        if (jobContext.getTransientUserData() == null) {
+            jobContext.setTransientUserData(this);
+        }
+        return (ImportJobContext) jobContext.getTransientUserData();
     }
 }

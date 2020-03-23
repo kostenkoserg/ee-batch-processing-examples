@@ -32,9 +32,9 @@ public class FileSelectorBatchlet extends AbstractBatchlet {
                 .filter(Files::isRegularFile)
                 .map(Path::toFile).findAny();
 
-
-        jobContext.setFile(file);
-        
+        if (file.isPresent()) {
+            jobContext.setFile(file);
+        }
         return BatchStatus.COMPLETED.name();
     }
 }
