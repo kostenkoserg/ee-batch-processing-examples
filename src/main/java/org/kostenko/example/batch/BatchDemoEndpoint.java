@@ -25,7 +25,7 @@ public class BatchDemoEndpoint {
         for (int i = 0; i < count; i++) {
             BatchRuntime.getJobOperator().start("empty", new Properties());
         }
-        
+
         return Response.ok().entity(count + " batch jobs was generated").build();
     }
 
@@ -35,6 +35,13 @@ public class BatchDemoEndpoint {
     public Response collectGarbage() {
         BatchRuntime.getJobOperator().start("garbageCollection", new Properties());
         return Response.ok().entity("Batch job garbage was collected").build();
+    }
+
+    @GET
+    @Path("/huge-import")
+    public Response startImport() {
+        BatchRuntime.getJobOperator().start("hugeImport", new Properties());
+        return Response.ok().entity("Batch job hugeImport was started").build();
     }
 
 }

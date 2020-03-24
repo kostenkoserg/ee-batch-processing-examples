@@ -30,7 +30,7 @@ public class ImportJobContext {
     }
 
     public Queue<ImportItem> getItems() {
-        return items;
+        return getImportJobContext().items;
     }
 
     private ImportJobContext getImportJobContext() {

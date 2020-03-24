@@ -2,7 +2,7 @@
 <job id="hugeImport" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/jobXML_1_0.xsd" version="1.0">
     
     <step id="fileSelector" next="decider">
-        <batchlet ref="fileSelector">
+        <batchlet ref="fileSelectorBatchlet">
             <properties>
                 <property name="path" value="/tmp/files2import"/>
             </properties>
@@ -15,7 +15,7 @@
     </decision>
 
     <step id="xmlParser" next="chunkProcessor">
-        <batchlet ref="xmlParrser">
+        <batchlet ref="xmlParserBatchlet">
             <properties>
                 <property name="itemClass" value="ImportItem"/>
             </properties>
@@ -23,18 +23,18 @@
     </step>
 
     <step id="jsonParser" next="chunkProcessor">
-        <batchlet ref="jsonParrser">
+        <batchlet ref="jsonParserBatchlet">
             <properties>
                 <property name="itemClass" value="ImportItem"/>
             </properties>
         </batchlet>
     </step>
 
-    <step id="chunkProcessor"  next="finalizer">
+    <step id="chunkProcessor">
         <chunk>
             <reader ref="itemReader"/>
-            <processor ref="mockItemProcessor"/>
-            <writer ref="jpaItemWriter"/>
+            <processor ref="itemMockProcessor"/>
+            <writer ref="itemJpaWriter"/>
         </chunk>
         <partition>
             <plan partitions="5"></plan>

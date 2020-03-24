@@ -1,17 +1,19 @@
 package org.kostenko.example.batch.imprt;
 
 import javax.batch.api.chunk.ItemProcessor;
+import javax.inject.Named;
 
 /**
  *
  * @author kostenko
  */
-public class MockProcessor implements ItemProcessor {
+@Named
+public class ItemMockProcessor implements ItemProcessor {
 
     @Override
     public Object processItem(Object o) throws Exception {
-
-        return "process";
+        System.out.println("--> processing " + o);
+        return o;
     }
     
 }

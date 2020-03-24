@@ -35,6 +35,8 @@ public class FileSelectorBatchlet extends AbstractBatchlet {
         if (file.isPresent()) {
             jobContext.setFile(file);
         }
+        
+        System.out.println("fs --> " + file.get().getName());
         return BatchStatus.COMPLETED.name();
     }
 }

@@ -4,11 +4,13 @@ import java.io.FileNotFoundException;
 import javax.batch.api.Decider;
 import javax.batch.runtime.StepExecution;
 import javax.inject.Inject;
+import javax.inject.Named;
 
 /**
  *
  * @author kostenko
  */
+@Named
 public class MyDecider implements Decider {
 
     @Inject
@@ -20,6 +22,8 @@ public class MyDecider implements Decider {
             throw new FileNotFoundException();
         }
         String name = jobContext.getFile().get().getName();
-        return name.substring(name.lastIndexOf("."));
+        String extension = name.substring(name.lastIndexOf(".")+1);
+        System.out.println("--> " + extension);
+        return extension;
     }
 }
